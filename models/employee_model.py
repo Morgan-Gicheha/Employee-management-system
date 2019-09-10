@@ -37,6 +37,21 @@ class Employee(db.Model):
             return True
         else:
             return False
+# this is a method to update data already in the db
+    @classmethod
+    def update_details(cls,id, employee_name=None, email=None, kra=None):
+        record = cls.query.filter_by(id=id).first()
+        
+        if record:
+            record.employee_name=employee_name
+            record.employee_email = email
+            record.employee_KRA_PIN=kra
+            db.session.commit()
+            return True
+
+        else:
+            return False
+
 
 
 

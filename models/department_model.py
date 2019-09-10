@@ -12,7 +12,7 @@ class Department(db.Model):
         db.session.commit()
     
     
-    # creating a function to check if department exists
+    # creating a method to check if department exists
     @classmethod
     def checker_department(cls,dep):
         checker_for_dp =cls.query.filter_by(department_name = dep).first()
@@ -21,3 +21,17 @@ class Department(db.Model):
             return True
         else:
             return False
+
+    # creating method
+    @classmethod
+    def update_by_id(cls,id,department=None):
+        record = cls.query.filter_by(id=id).first()
+        
+        if record:
+            record.department_name = department
+            db.session.commit()
+            return True
+        else:
+            return False
+   
+    

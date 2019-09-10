@@ -4,9 +4,77 @@
 {#    employees modal#}
 
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#exampleModal">
   Add department
 </button>
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      
+      <th scope="col">id</th>
+      <th scope="col">name</th>
+      <th scope="col">edit</th>
+      <th scope="col">delete</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for all in all_depart %}
+    <tr>
+      <th scope="row">{{ all.id }}</th>
+      <td>{{all.department_name}}</td>
+      <td>
+        <button data-toggle="modal" data-target="#editModal{{ all.id }}" class="btn btn-warning">edit</button>
+
+        <div class="modal" id="editModal{{ all.id }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="/departments/edit/{{ all.id }}" method="POST">
+                    <input name='updated_department'class="form-control" type="text" value="{{ all.department_name }}">
+               
+                     <button type="submit" class="btn btn-success">Update</button>
+                    </form>  
+                
+              </div>
+            </div>
+          </div>
+
+      </td>
+      <!-- adding a delete button -->
+      <td><button class="btn btn-danger" data-toggle="modal" data-target="#delete_dep_id{{all.id}}">delete</button></td>
+      <!-- attacthing delete modal -->
+        <div class="modal" id="delete_dep_id{{all.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Confirm Delete</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+               <form action="" method="">
+                  <p>𝐜𝐨𝐧𝐟𝐢𝐫𝐦 𝐝𝐞𝐥𝐞𝐭𝐞 𝐃𝐞𝐩𝐚𝐫𝐭𝐦𝐞𝐧𝐭 {{all.department_name}}</p>
+                  <button type="submit" class="btn btn-danger">Confirm</button>
+              </form>
+            </div>
+          </div>
+    </tr>
+   
+      {% endfor %}
+  </tbody>
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

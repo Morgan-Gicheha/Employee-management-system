@@ -2,12 +2,13 @@
 
 {% block content %}
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+<button type="button" class="btn-block btn-lg btn-primary" data-toggle="modal" data-target="#exampleModalLong">
   Add employee
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -18,67 +19,158 @@
       </div>
       <div class="modal-body">
 
-{#          ADDING NAME#}
+        {#          ADDING NAME#}
 
 
-           {# adding email#}
-          <form action="/employees" method="post">
+        {# adding email#}
+        <form action="/employees" method="post">
 
-              <div class="form-group">
-              <label for="Name">Name</label>
-              <input name="full_names" type="text" class="form-control" id="name" placeholder="Enter fullname" required>
-               </div>
+          <div class="form-group">
+            <label for="Name">Name</label>
+            <input name="full_names" type="text" class="form-control" id="name" placeholder="Enter fullname" required>
+          </div>
 
-             <div class="form-group">
-             <label for="exampleInputEmail1">Email address</label>
-             <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
-             </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Enter email" required>
+          </div>
 
-             <!-- adding in number -->
-             <div class="form-group">
-              <label for="national_id_no.">National ID number</label>
-              <input name="national_id_no" type="text" class="form-control" id="national_id_no" placeholder="all should be digits" required>
-               </div>
+          <!-- adding in number -->
+          <div class="form-group">
+            <label for="national_id_no.">National ID number</label>
+            <input name="national_id_no" type="text" class="form-control" id="national_id_no"
+              placeholder="all should be digits" required>
+          </div>
 
-{#              gender counter#}
-              <div class="form-group">
-              <label for="exampleFormControlSelect1" required>Select Gender</label>
-              <select name="gender" class="form-control" id="exampleFormControlSelect1">
+          {#              gender counter#}
+          <div class="form-group">
+            <label for="exampleFormControlSelect1" required>Select Gender</label>
+            <select name="gender" class="form-control" id="exampleFormControlSelect1">
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="custom">custom</option>
-              </select>
-              </div>
-{#              age#}
-               <div class="form-group">
-              <label for="age">Age</label>
-              <input  name="age" type="text" class="form-control" id="age" placeholder="">
-               </div>
-{#              KRA PIN#}
-               <div class="form-group">
-              <label for="kra pin">KRA PIN</label>
-              <input  name="kra_pin" type="text" class="form-control" id="kra pin" placeholder="" required>
-               </div>
+            </select>
+          </div>
+          {#              age#}
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input name="age" type="text" class="form-control" id="age" placeholder="">
+          </div>
+          {#              KRA PIN#}
+          <div class="form-group">
+            <label for="kra pin">KRA PIN</label>
+            <input name="kra_pin" type="text" class="form-control" id="kra pin" placeholder="" required>
+          </div>
 
-               <!-- printing all deps available in the db -->
-               <div class="form-group">
-                  <label for="exampleFormControlSelect1" required>Select department</label>
-                 <select name="" class="form-control form-control-sm">
-                   
-                   {% for any in depart %}
-                    <option value="{{any.id}}">{{any.department_name}}</option>
-                   {% endfor %}
-                 </select>
-                  </div>
-              
+          <!-- printing all deps available in the db -->
+          <div class="form-group">
+            <label for="exampleFormControlSelect1" required>Select department</label>
+            <select name="" class="form-control form-control-sm">
 
-                <!-- submit button. must be inside form -->
-            <button type="submit" class="btn btn-success">Submit</button>
-          </form>
+              {% for any in depart %}
+              <option value="{{any.id}}">{{any.department_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+
+          <!-- submit button. must be inside form -->
+          <button type="submit" class="btn btn-success">Submit</button>
+
+        </form>
       </div>
+
+
 
     </div>
   </div>
 </div>
 
+
+
+
+<table class="table">
+    <thead>
+      <tr>
+        
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Id number</th>
+        <th scope="col">Gender</th>
+        <th scope="col">KRA PIN</th>
+        
+        <th scope="col">edit</th>
+        <th scope="col">delete</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for all in all_emps %}
+      <tr>
+        <th scope="row">{{ all.id }}</th>
+        <td>{{all.employee_name}}</td>
+        <td>{{all.employee_email}}</td>
+        <td>{{all.employee_national_id}}</td>
+        <td>{{all.employee_gender}}</td>
+       
+
+        
+                <td>{{all.employee_KRA_PIN}}</td>
+        <!-- creatin a button to edit -->
+        <td><button type="button" data-toggle="modal" data-target="#modal_to_btn_id{{all.id}}" class="btn btn-warning">Edit</button></td>
+        <!-- adding a modal.it activates when the button is pressed -->
+        <div class="modal" id="modal_to_btn_id{{all.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Update</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/employees/edit/{{all.id}}" method="POST">
+                    <p>Name</p>
+                    <input name='updated_name'class="form-control form-control-lg" type="text" value="{{all.employee_name}}" required><br>
+                    <p>Email</p>
+                   
+                    <input name='updated_email' class="form-control form-control-lg" type="text" value="{{all.employee_email}}" required><br>
+                    <p>KRA PIN</p>
+                    <input name='updated_kra'class="form-control form-control-lg" type="text" value="{{all.employee_KRA_PIN}}" required><br>
+                   
+                    <button type="submit" class="btn  btn-success">Update</button>
+                  </form>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+
+        <!-- creating a button to delete -->
+        <td><button type="button" data-toggle="modal" data-target="#delete_id{{all.id}}" class="btn btn-danger">Delete</button></td>
+        <!-- attaching modal to delet btn -->
+          <div class="modal" id="delete_id{{all.id}}" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">𝐜𝐨𝐧𝐟𝐢𝐫𝐦 𝐝𝐞𝐥𝐞𝐭𝐞</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="" method="">
+                      <p>𝐜𝐨𝐧𝐟𝐢𝐫𝐦 𝐝𝐞𝐥𝐞𝐭𝐞 𝐞𝐦𝐩𝐥𝐨𝐲𝐞𝐞 {{all.employee_name}}</p>
+                      <button type="submit" class=" btn btn-block btn-danger">Confirm</button>
+                    </form>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+      </tr>
+        {% endfor %}
+
+    </tbody>
 {% endblock %}
