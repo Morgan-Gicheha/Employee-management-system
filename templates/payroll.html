@@ -1,0 +1,73 @@
+{% extends 'parent.html' %}
+{% block content %}
+
+        <!-- modal -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                Generate payroll
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="'/payroll/<int:id>'" method="POST">
+                            <label for="id_for_salary">Gross Salary</label>
+                        <!-- display basic_salary -->
+                            <input name="gross_salary_entered" id="id_for_salary" class="form-control" type="text" placeholder=" gross salary">
+                        <!-- display benefits -->
+                            <label for="id_for_benefits">Benefits</label>
+                        <input name="benefits_entered" id="id_for_benefits" class="form-control" type="text" placeholder="total benefits">
+                        <button type="submit" class="btn btn-warning"> Generate </button>
+                        </form>
+                    </div>
+                   
+                </div>
+                </div>
+            </div>
+
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">employee name</th>
+            <th scope="col">Basic Salary</th>
+            <th scope="col">benfits</th>
+            
+            <th scope="col">department</th>
+            <th scope="col">payee</th>
+            <th scope="col">Relief</th>
+            <th scope="col">NHIF</th>
+            <th scope="col">NSSF</th>
+            <th scope="col">NET Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for all in to_payroll_list %}
+          <tr>
+            <th scope="row">{{all.id}}</th>
+            <td>{{all.employee_name}}</td>
+            <td>{{all.employee_salary}}</td>
+            <td>{{all.employee_benefits}}</td>
+              
+            <td> {{all.employee_table.department_name}}</td>
+              
+            <td>payee</td>
+            <td>relief</td>
+            <td>nhif</td>
+            <td>nssf</td>
+            <td>net salary</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends 'parent.html' %}
+{% block content %}
+
+<h1>{{sekta.department_name}}</h1>
+
+
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">..</th>
+            <th scope="col">Name</th>
+            <th scope="col">email</th>
+            <th scope="col">Gender</th>
+            <th scope="col">National ID</th>
+            <th scope="col">Age</th>
+            <th scope="col">KRA PIN</th>
+            <th scope="col">payroll</th>
+            s
+          </tr>
+        </thead>
+        <tbody>
+         {% for every in emp %}
+          <tr>
+            <th scope="row">{{ every.id }}</th>
+            <td>{{ every.employee_name }}</td>
+            <td>{{ every.employee_email }}</td>
+            <td>{{ every.employee_gender }}</td>
+            <td>{{ every.employee_national_id }}</td>
+            <td>{{ every.employee_age }}</td>
+            <td>{{ every.employee_KRA_PIN }}</td>
+            <!-- payroll link..  it should take in id    -->
+            <td><a href=""  >View Payroll</a></td>
+            
+
+          </tr>
+         {% endfor %}
+          
+        </tbody>
+      </table>
+
+{% endblock %}

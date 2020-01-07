@@ -15,16 +15,19 @@
     <tr>
       
       <th scope="col">id</th>
-      <th scope="col">name</th>
+      <th scope="col">department</th>
+      <th scope="col">employees</th>
       <th scope="col">edit</th>
       <th scope="col">delete</th>
+      
     </tr>
   </thead>
   <tbody>
       {% for all in all_depart %}
     <tr>
       <th scope="row">{{ all.id }}</th>
-      <td>{{all.department_name}}</td>
+      <td>{{all.department_name|capitalize}}</td>
+      <td><a href='/department/employees/{{ all.id }}'>employees</a></td>
       <td>
         <button data-toggle="modal" data-target="#editModal{{ all.id }}" class="btn btn-warning">edit</button>
 
@@ -42,7 +45,7 @@
                     <form action="/departments/edit/{{ all.id }}" method="POST">
                     <input name='updated_department'class="form-control" type="text" value="{{ all.department_name }}">
                
-                     <button type="submit" class="btn btn-success">Update</button>
+                     <button type="submit" class="btn btn-block btn-success">Update</button>
                     </form>  
                 
               </div>
@@ -64,10 +67,11 @@
                 </div>
                <form action="" method="">
                   <p>𝐜𝐨𝐧𝐟𝐢𝐫𝐦 𝐝𝐞𝐥𝐞𝐭𝐞 𝐃𝐞𝐩𝐚𝐫𝐭𝐦𝐞𝐧𝐭 {{all.department_name}}</p>
-                  <button type="submit" class="btn btn-danger">Confirm</button>
+                  <a href="/departments/delete/{{all.id}}" type="submit" class=" btn btn-danger btn-block">Proceed Delete</a>
               </form>
             </div>
           </div>
+          
     </tr>
    
       {% endfor %}
