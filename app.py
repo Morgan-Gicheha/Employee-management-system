@@ -48,11 +48,11 @@ def employees():
     # print(type(all_employees))
     # for employee in all_employees:
     #     print(employee.employee_name)
-
     if request.method == 'POST':
         name = request.form['full_names']
         email = request.form['email']
         gender = request.form['gender']
+        phone_number=request.form['phone_number']
         national_id_number = request.form['national_id_no']
         age = request.form['age']
         kra_pin = request.form['kra_pin']
@@ -63,6 +63,7 @@ def employees():
 
         # sending info to the db
         # create an object of the Employee class
+        print(name)
         if Employee.checking_employee(national_id_number):
 
             print(' employee exists')
@@ -79,7 +80,7 @@ def employees():
         else:
             # this equates the  the columns where data will be inputed and values to be inputed
             emp = Employee(employee_name=name, employee_email=email,
-                           employee_gender=gender, employee_national_id=national_id_number, employee_age=age, employee_KRA_PIN=kra_pin, department_id=dep_id,employee_salary=salary,employee_benefits=benefits)
+                           employee_gender=gender, employee_national_id=national_id_number, employee_age=age, employee_KRA_PIN=kra_pin, department_id=dep_id,employee_salary=salary,employee_benefits=benefits,employee_phone_number=phone_number)
             # this calls the function fro the employee_models to commit te data to the db
 
             emp.create()
@@ -98,6 +99,7 @@ def departments():
 
     if request.method == 'POST':
         department = request.form['department_name_entered']
+        
 
         if Department.checker_department(department):
 
@@ -132,7 +134,30 @@ def update_department(id):
 # CREATING A ROUTE TO EDIT EMPLOYEE DETAILS
 @app.route('/employees/edit/<int:id>', methods=['POST', 'GET'])
 def update_employee(id):
-    pass
+    if request.method=='POST':
+        full_names= request.form['full_names']
+        email=request.form['email']
+        national_id_no=request.form['national_id_no']
+        phone_number=request.form['phone_number']
+        gender=request.form['gender']
+        age=request.form['age']
+        kra_pin=request.form['kra_pin']
+        update_salary=request.form['update_salary']
+        update_benefits=request.form['update_benefits']
+        dep_id=request.form['dep_id']
+
+        try:
+    
+            updates = Employee.update_details(id=id,employee_name=full_names,email=email,kra=kra_pin,salary=update_salary,benefits=update_benefits,age=age,gender=gender,national_id=national_id_no,phone_number=phone_number,update_department_id=dep_id)
+            flash(f'updates on employee named {full_names} done succesfully','info')
+            return redirect(url_for('employees'))
+        except Exception:
+            flash('un error occured .plz retry','danger')
+            return redirect(url_for('employees'))
+
+
+
+
 # 
 # work
 # on this

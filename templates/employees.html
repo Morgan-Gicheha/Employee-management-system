@@ -20,7 +20,7 @@
       <div class="modal-body">
 
         {#          ADDING NAME#}
-        
+
 
         <label for="name">Personal info</label>
         {# adding email#}
@@ -35,6 +35,14 @@
             <label for="exampleInputEmail1">Email address</label>
             <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
               placeholder="Enter email" required>
+          </div>
+
+          <!-- phon number -->
+
+          <div class="form-group">
+            <label for="phone_number">phone_number</label>
+            <input name="phone_number" type="text" class="form-control" id="phone_number" placeholder="0712345678"
+              required>
           </div>
 
           <!-- adding in number -->
@@ -69,23 +77,24 @@
             <label for="exampleFormControlSelect1" required>Select department</label>
             <select name="dep_id" class="form-control form-control-sm">
 
-            
+
 
               {% for any in depart %}
               <option id="other" value="{{any.id}}">{{any.department_name}}</option>
               {% endfor %}
             </select>
           </div>
-           <!--  salary -->
-              <div class="form-group">
-                <label for="salary">Salary</label>
-                <input name="entered_salary" type="text" class="form-control"  placeholder="monthly" >
-              </div>
+          <!--  salary -->
+          <div class="form-group">
+            <label for="salary">Salary</label>
+            <input name="entered_salary" type="text" class="form-control" placeholder="monthly">
+          </div>
           <!-- benefits -->
 
           <div class="form-group">
             <label for="benefits">benefits</label>
-            <input name="entered_benefits" type="text" class="form-control" id="benefits" placeholder="all combined benefits" >
+            <input name="entered_benefits" type="text" class="form-control" id="benefits"
+              placeholder="all combined benefits">
           </div>
 
           <!-- submit button. must be inside form -->
@@ -111,13 +120,14 @@
       <th scope="col">payroll</th>
       <th scope="col">name</th>
       <th scope="col">Email</th>
+      <th scope="col">phone_number</th>
       <th scope="col">Id number</th>
       <th scope="col">Gender</th>
       <th scope="col">department</th>
       <th scope="col">KRA PIN</th>
       <th scope="col">Salary</th>
       <th scope="col">Benefits</th>
-      
+
       <th scope="col">edit</th>
       <th scope="col">delete</th>
 
@@ -130,9 +140,10 @@
       <td> <a href="/payroll/{{all.id}}">payroll</a> </td>
       <td>{{all.employee_name}}</td>
       <td>{{all.employee_email}}</td>
+      <td>+254 {{all.employee_phone_number}}</td>
       <td>{{all.employee_national_id}}</td>
       <td>{{all.employee_gender}}</td>
-      <td>{{ all.employees_table.department_name }}</td>
+      <td>{{ all.employee_.department_name}}</td>
 
       <td>{{all.employee_KRA_PIN}}</td>
       <td>{{all.employee_salary}}</td>
@@ -172,12 +183,21 @@
                     value="{{all.employee_national_id}}" required>
                 </div>
 
+                <!-- phon number -->
+
+                <div class="form-group">
+                  <label for="phone_number">phone_number</label>
+                  <input name="phone_number" type="text" class="form-control" id="phone_number" value="{{all.employee_phone_number}}"
+                    required>
+                </div>
+
                 {#              gender counter#}
-                
+
                 <div class="form-group">
                   <label for="exampleFormControlSelect1" required>Select Gender</label>
                   <select name="gender" class="form-control" id="exampleFormControlSelect1">
-                    <option  value="male">Male</option>
+                    <option value="{{all.id}}">{{all.employee_gender}}</option>
+                    <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="custom">custom</option>
                   </select>
@@ -191,26 +211,29 @@
                 {#              KRA PIN#}
                 <div class="form-group">
                   <label for="kra pin">KRA PIN</label>
-                  <input name="kra_pin" type="text" class="form-control" id="kra pin" value='{{all.employee_KRA_PIN}}' required>
+                  <input name="kra_pin" type="text" class="form-control" id="kra pin" value='{{all.employee_KRA_PIN}}'
+                    required>
                 </div>
                 <!-- salary  -->
                 <div class="form-group">
                   <label for="salary">salary</label>
-                  <input name="update_salary" type="text" class="form-control" id="salary" value='{{all.employee_salary}}' required>
+                  <input name="update_salary" type="text" class="form-control" id="salary"
+                    value='{{all.employee_salary}}' required>
                 </div>
                 <!-- benefits -->
                 <div class="form-group">
                   <label for="benefits">Benefits</label>
-                  <input name="update_benefits" type="text" class="form-control" id="benefits" value='{{all.employee_benefits}}' required>
+                  <input name="update_benefits" type="text" class="form-control" id="benefits"
+                    value='{{all.employee_benefits}}' required>
                 </div>
 
                 <!-- printing all deps available in the db -->
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1" required>Select department</label>
+                <div class="form-group">                  <label for="exampleFormControlSelect1" required>Select department</label>
                   <select name="dep_id" class="form-control form-control-sm">
-                    
+                    <option selected value="{{all.employee_.id}}" >{{all.employee_.department_name}}</option>
+
                     {% for any in depart %}
-                    <option name='update_department' value="{{ any.id }}">{{ any.department_name }}</option>
+                    <option  value="{{ any.id }}">{{ any.department_name }}</option>
                     {% endfor %}
                   </select>
                 </div>

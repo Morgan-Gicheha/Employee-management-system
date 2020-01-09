@@ -7,7 +7,8 @@ class Employee(db.Model):
     __tablename__='employees_table'
     id= db.Column(db.Integer,primary_key=True)
     employee_name=db.Column(db.String(20),nullable=False)
-    employee_email=db.Column(db.String(20),nullable=False)
+    employee_email=db.Column(db.String(50),nullable=False)
+    employee_phone_number=db.Column(db.Integer, nullable=False, unique=True)
     employee_gender = db.Column(db.String(50), nullable=False)
     employee_national_id = db.Column(db.Integer, nullable=False, unique=True)
     employee_age = db.Column(db.Integer, nullable=False)
@@ -17,23 +18,7 @@ class Employee(db.Model):
     department_id= db.Column(db.Integer,db.ForeignKey('departments_table.id'))
 
 
-# class Employee(db.Model):
-#     # __tablename__ = 'employees_table'
-#     id = db.Column(db.Integer, primary_key=True)
-#     employee_name = db.Column(db.String(20), nullable=False)
-#     employee_email = db.Column(db.String(70), nullable=True)
-#     employee_gender = db.Column(db.String(50), nullable=False)
-#     employee_national_id = db.Column(db.Integer, nullable=False, unique=True)
-#     employee_age = db.Column(db.Integer, nullable=False)
-#     employee_KRA_PIN = db.Column(db.String(), nullable=False, unique=True)
-#     employee_salary = db.Column(db.Integer, nullable=False)
-#     employee_benefits = db.Column(db.Integer, nullable=False)
 
-#     department_id = db.Column(
-#         db.Integer, db.ForeignKey('departments_table.id'))
-
-
-#     employee_id = db.relationship('Payroll', backref='employee', lazy=True)
 
 #     # creating function to commit to db
 
@@ -69,7 +54,7 @@ class Employee(db.Model):
             return False
 # this is a method to update data already in the db
     @classmethod
-    def update_details(cls, id, employee_name=None, email=None, kra=None, salary=None, benefits=None, age=None, gender=None, national_id=None):
+    def update_details(cls, id, employee_name=None, email=None, kra=None, salary=None, benefits=None, age=None, gender=None, national_id=None,phone_number=None,update_department_id=None):
         record = cls.query.filter_by(id=id).first()
 
         if record:
@@ -78,7 +63,9 @@ class Employee(db.Model):
             record.employee_KRA_PIN = kra
             record.employee_salary = salary
             record.employee_benefits = benefits
+            record.department_id=update_department_id
             record.employee_age = age
+            record.employee_phone_number=phone_number
             record.employee_gender = gender
             record.employee_national_id = national_id
             db.session.commit()
