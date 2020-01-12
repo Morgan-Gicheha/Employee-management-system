@@ -4,6 +4,7 @@
 <table class="table">
     <thead>
       <tr>
+        <th scope="col">id</th>
         <th scope="col">month</th>
         <th scope="col">name</th>
         <th scope="col">basic_salary </th>
@@ -20,9 +21,11 @@
       </tr>
     </thead>
     <tbody>
+      {% for success_all_emps in success_all_emps %}
       <tr>
-        <th scope="row">month</th>
-        <td>Mark</td>
+        <th scope="row">{{success_all_emps.id}}</th>
+        <td>{{success_all_emps.payroll__.id}}</td>
+        <td>{{success_all_emps.employee_name}}</td>
         <td>basic_salary</td>
         <td>benefits</td>
         <td>gross_salary</td>
@@ -34,6 +37,7 @@
         <td>net_salary</td>
         
       </tr>
+      {% endfor %}
 
     </tbody>
   </table>

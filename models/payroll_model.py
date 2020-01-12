@@ -10,10 +10,10 @@ class Payroll(db.Model):
     nssf_contribution = db.Column(db.Integer,nullable=False)
     nhif_contribution = db.Column(db.Integer,nullable=False)
     payee = db.Column(db.Integer,nullable=False)
-    personal_relief = db.Column(db.Integer,nullable=True)
+    
     total_tax_payable = db.Column(db.Integer,nullable=False)
     net_salary = db.Column(db.Integer,nullable=False)
-    month= db.Column(db.String(5),nullable=False)
+    month= db.Column(db.String(),nullable=False)
     employee_id= db.Column(db.Integer , db.ForeignKey('employees_table.id'))
 
     # method to commit to db

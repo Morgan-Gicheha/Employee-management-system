@@ -15,8 +15,7 @@
 
   </thead>
   <tbody>
-    {% for something in all_emps %}
-    <tr>
+    {% for something in all_emps %}<tr>
       <th scope="row">{{something.id}}</th>
       <td>{{something.employee_name}}</td>
       <td>{{something.employee_salary}}</td>
@@ -27,28 +26,27 @@
 
       <!-- modal -->
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{something.id}}">
         Generate payroll
       </button>
 
       <!-- Modal -->
-      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+      <div class="modal fade" id="exampleModalLong{{something.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle"> Generate Payroll for employee: </h5>
+              <h5 class="modal-title" id="exampleModalLongTitle"> Generate Payroll for employee: {{something.employee_name}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-             
-
-
-    
-              <form action="/generate" method="POST">
-               <input type="text" placeholder="kgvfgvh">
+      
+              <form action="/payroll/success{{something.id}}" method="POST">
+                <label for="id_month"><bold>which date/month for payroll generation</bold> </label>
+                <input name="month" id='id_month' type="month" required>
+              
                 <button type="submit" class="btn btn-warning"> Generate </button> 
                 {% endfor %}
               </form>

@@ -203,5 +203,58 @@ def geting_employees_in_deps(id):
     return render_template('view_emps_in_dps.html', sekta=deprt,all_employees=all_employees,emp=emp)
 
 
+
+@app.route('/payroll/<int:id>')
+def payroll(id):
+
+    all_emps = Employee.query.filter_by(id=id)
+
+    return render_template('payroll.html',all_emps=all_emps)
+
+    # 
+
+# succes payroll.route
+
+@app.route('/payroll/success<int:id>',methods=['GET','POST'])
+def success_payroll(id):
+    # fetching all emps with.. the id in this roue is gotten from payroll route in  the loop in th payroll.html
+    success_all_emps= Employee.query.filter_by(id=id)
+    for anything in success_all_emps:
+        print(anything.payroll_.gross_salary)
+        employee_id=anything.id
+        salary=anything.employee_salary
+        benefits=anything.employee_benefits
+
+    if request.method=='POST':
+        month =request.form['month']
+        print(month)
+  
+        
+        # instantiating gen_subs_payroll to payroll_()
+        gen_subs_payroll = Payroll_C(basic_salary=salary,benefits=benefits)
+
+        gross_salary=gen_subs_payroll.calculate_gross_salary()
+        taxable_income = gen_subs_payroll.calculate_taxable_income()
+        nssf_contribution = gen_subs_payroll.calculate_nssf()
+        nhif_contribution = gen_subs_payroll.calculate_nhif()
+        payee = gen_subs_payroll.calculate_payee()
+        total_tax_payable= gen_subs_payroll.calculate_tax_payable()
+        net_salary = gen_subs_payroll.calculate_net_salary()
+        
+        # connectin to db
+        db_payroll= Payroll(basic_salary=salary,benefits=benefits,gross_salary=gross_salary,
+        taxable_income=taxable_income,nssf_contribution=nssf_contribution,nhif_contribution=nhif_contribution,
+        payee=payee,total_tax_payable=total_tax_payable,net_salary=net_salary,month=month,employee_id=employee_id)
+
+        # creating record
+        db_payroll.create()
+
+
+
+
+        
+       
+    return render_template('generated_payroll.html',success_all_emps=success_all_emps)
+
 if __name__ == '__main__':
     app.run(debug=True)
