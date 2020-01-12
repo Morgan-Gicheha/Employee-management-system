@@ -5,7 +5,7 @@ class Department(db.Model):
     __tablename__ = 'departments_table'
     id=db.Column(db.Integer,primary_key=True)
     department_name=db.Column(db.String(20),nullable=False,unique=True)
-    employee= db.relationship('Employee',backref='employee_')
+    employee= db.relationship('Employee',backref='employee_',lazy=True)
 
 
 # class Department(db.Model):

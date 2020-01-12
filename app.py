@@ -14,6 +14,7 @@ db = SQLAlchemy(app)
 
 # importing models
 from models.payroll_model import Payroll
+from models.payroll_class import Payroll_C
 from models.employee_model import Employee
 from models.department_model import Department
 
@@ -185,28 +186,6 @@ def delete_department_by_id(id):
 
     return redirect(url_for('departments'))
 
-# creating a route to generate payroll
-@app.route('/payroll/<int:id>', methods=['POST', 'GET'])
-def generate_payroll(id):
-
-    if request.method == 'GET':
-        # recieving entered data from generate_modal
-        # entered_gross_salary = request.form['gross_salary_entered']
-        # entered_benefits = request.form['benefits_entered']
-
-        print('salary imeingia')
-        # fetching all employees
-        all_employees = Employee.query.all()
-        every_emp=all_employees
-        # FETCHING DEPARTMENT by id
-        # all_emps=Department.fetching_department_by_id(id=id)
-        print(id)
-        
-       
-
-       
-        
-    return render_template('payroll.html',to_payroll_list=every_emp,id=id)
 
 # creating route to view  employees in a department
 @app.route('/department/employees/<int:id>', methods=['POST', 'GET'])

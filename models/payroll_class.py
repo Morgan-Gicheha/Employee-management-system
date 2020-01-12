@@ -1,4 +1,4 @@
-class Employee:
+class Payroll_C:
     basicSalary = 0
     benefits = 0
     grossSalary = 0 #Income before pensionable deduction
