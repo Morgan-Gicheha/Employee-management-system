@@ -12,7 +12,6 @@
         <th scope="col">gross_salary</th>
         <th scope="col">taxable_income</th>
         <th scope="col">nssf_contribution</th>
-    
         <th scope="col">nhif_contribution</th>
         <th scope="col">payee</th>
         <th scope="col">total_tax_payable</th>
@@ -21,23 +20,23 @@
       </tr>
     </thead>
     <tbody>
-      {% for success_all_emps in success_all_emps %}
+      
       <tr>
-        <th scope="row">{{success_all_emps.id}}</th>
-        <td>{{success_all_emps.payroll__.id}}</td>
-        <td>{{success_all_emps.employee_name}}</td>
-        <td>basic_salary</td>
-        <td>benefits</td>
-        <td>gross_salary</td>
-        <td>taxable_income</td>
-        <td>nhif_contribution</td>
-        <td>nssf_contribution</td>
-        <td>payee</td>
-        <td>total_tax_payable</td>
-        <td>net_salary</td>
+        <th scope="row">{{fetch_payroll.id}}</th>
+        <td>now..</td>
+        <td>{{fetch_payroll.employee__.employee_name}}</td>
+        <td>{{fetch_payroll.basic_salary}}</td>
+        <td>{{fetch_payroll.benefits}}</td>
+        <td>{{fetch_payroll.gross_salary}}</td>
+        <td>{{fetch_payroll.taxable_income}}</td>
+        <td>{{fetch_payroll.nssf_contribution}}</td>
+        <td>{{fetch_payroll.nhif_contribution}}</td>
+        <td>{{fetch_payroll.payee}}</td>
+        <td>{{fetch_payroll.total_tax_payable}}</td>
+        <td>{{fetch_payroll.net_salary}}</td>
         
       </tr>
-      {% endfor %}
+     
 
     </tbody>
   </table>

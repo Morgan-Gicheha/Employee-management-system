@@ -13,13 +13,33 @@ class Payroll(db.Model):
     
     total_tax_payable = db.Column(db.Integer,nullable=False)
     net_salary = db.Column(db.Integer,nullable=False)
-    month= db.Column(db.String(),nullable=False)
+    month= db.Column(db.String(),nullable=False,unique=False)
     employee_id= db.Column(db.Integer , db.ForeignKey('employees_table.id'))
 
     # method to commit to db
     def create(self):
         db.session.add(self)
         db.session.commit()
+
+
+    # fetching payroll with employee id
+    @classmethod
+    def fetch_payroll_employee_id(cls,employee_id):
+        fetch_payroll_employee_id=cls.query.filter_by(employee_id=employee_id)
+        return fetch_payroll_employee_id
+
+    # deleting a payroll
+    @classmethod
+    def deleting_payroll(cls,id):
+        payroll_id=cls.query.filter_by(id=id)
+        if payroll_id.first():
+            payroll_id.delete()
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
 
     
     

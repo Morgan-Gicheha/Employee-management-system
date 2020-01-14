@@ -18,7 +18,8 @@ class Employee(db.Model):
     employee_benefits = db.Column(db.Integer, nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('departments_table.id'))
 
-    payroll__=db.relationship('Payroll',backref='payroll_backref')
+    payroll__=db.relationship('Payroll',backref='employee__')
+
     
 
 #     # creating function to commit to db

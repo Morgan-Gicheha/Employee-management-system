@@ -168,8 +168,13 @@ def update_employee(id):
 def delete_employee(id):
     # print('my delete id is',id)
     # calling function to delete the employee
-    deleted_employee_of_id = Employee.delete_employee(id)
-    flash('Employee DELETED')
+    emp= Employee.fetching_all_emps_by_id_test(id=id)
+    # print(emp.employee_name)
+    try:
+        deleted_employee_of_id = Employee.delete_employee(id)
+        flash('Employee DELETED')
+    except Exception:
+        flash(f' cannot delete employee named  {emp.employee_name} because he/she has payrolls. Consider clearing the payroll first','warning')
 
     return redirect(url_for('employees'))
 
@@ -204,30 +209,25 @@ def geting_employees_in_deps(id):
 
 
 
-@app.route('/payroll/<int:id>')
-def payroll(id):
-
-    all_emps = Employee.query.filter_by(id=id)
-
-    return render_template('payroll.html',all_emps=all_emps)
-
-    # 
 
 # succes payroll.route
 
 @app.route('/payroll/success<int:id>',methods=['GET','POST'])
 def success_payroll(id):
     # fetching all emps with.. the id in this roue is gotten from payroll route in  the loop in th payroll.html
+    print(id)
     success_all_emps= Employee.query.filter_by(id=id)
     for anything in success_all_emps:
-        print(anything.payroll_.gross_salary)
+        # print(anything.payroll_.gross_salary)
         employee_id=anything.id
         salary=anything.employee_salary
         benefits=anything.employee_benefits
+        print( anything.employee_name)
+        
 
     if request.method=='POST':
-        month =request.form['month']
-        print(month)
+        monthy =request.form['month']
+        
   
         
         # instantiating gen_subs_payroll to payroll_()
@@ -240,21 +240,64 @@ def success_payroll(id):
         payee = gen_subs_payroll.calculate_payee()
         total_tax_payable= gen_subs_payroll.calculate_tax_payable()
         net_salary = gen_subs_payroll.calculate_net_salary()
+        print(payee)
         
-        # connectin to db
+
+
+
+
+                # connectin to db
         db_payroll= Payroll(basic_salary=salary,benefits=benefits,gross_salary=gross_salary,
         taxable_income=taxable_income,nssf_contribution=nssf_contribution,nhif_contribution=nhif_contribution,
-        payee=payee,total_tax_payable=total_tax_payable,net_salary=net_salary,month=month,employee_id=employee_id)
+        payee=payee,total_tax_payable=total_tax_payable,net_salary=net_salary,month=monthy,employee_id=employee_id)
 
-        # creating record
-        db_payroll.create()
-
-
-
-
+        fetch_payroll=Payroll.fetch_payroll_employee_id(employee_id=id).first()
+        print(fetch_payroll)
         
+
+        db_payroll.create()
+        flash(f'payroll for {anything.employee_name} for moonth {monthy} has been generated. ','success')
+
        
-    return render_template('generated_payroll.html',success_all_emps=success_all_emps)
+    return render_template('generated_payroll.html',fetch_payroll=fetch_payroll)
+
+# view previous payrolls
+@app.route('/view_payrolls/<int:id>')
+def view_payrolls(id):
+    employee= Employee.query.filter_by(id=id).first()
+    
+    
+    # fetching payrolls with foriengkey employee id
+    fetched_payroll=Payroll.fetch_payroll_employee_id(employee_id=id)
+    
+
+
+    return render_template('view_payroll.html',fetched_payroll=fetched_payroll)
+
+
+@app.route('/payroll/<int:id>')
+def payroll(id):
+
+    all_emps = Employee.query.filter_by(id=id)
+
+    return render_template('payroll.html',all_emps=all_emps)
+
+    # 
+
+# route to delete payroll
+@app.route('/payroll/delete/<int:id>',methods=['POST','GET'])
+def delete_payroll(id):
+    try:
+        delete_payroll_id = Payroll.deleting_payroll(id=id)
+        print(delete_payroll_id)
+        flash('payroll deleted','success')
+        print('deleted')
+    except Exception:
+        flash('an error occured! retry...')
+
+    return redirect(url_for('view_payrolls', id=delete_payroll_id ))
+
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
