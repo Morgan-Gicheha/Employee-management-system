@@ -264,12 +264,16 @@ def success_payroll(id):
 # view previous payrolls
 @app.route('/view_payrolls/<int:id>')
 def view_payrolls(id):
-    employee= Employee.query.filter_by(id=id).first()
-    
+       
     
     # fetching payrolls with foriengkey employee id
     fetched_payroll=Payroll.fetch_payroll_employee_id(employee_id=id)
-    
+    print(fetched_payroll)
+
+   
+    global id_of_employee_on_payroll
+    id_of_employee_on_payroll=id
+    print(id_of_employee_on_payroll)
 
 
     return render_template('view_payroll.html',fetched_payroll=fetched_payroll)
@@ -287,6 +291,10 @@ def payroll(id):
 # route to delete payroll
 @app.route('/payroll/delete/<int:id>',methods=['POST','GET'])
 def delete_payroll(id):
+# fetch all payroll to get the employee id
+
+
+    print(id)
     try:
         delete_payroll_id = Payroll.deleting_payroll(id=id)
         print(delete_payroll_id)
@@ -295,7 +303,7 @@ def delete_payroll(id):
     except Exception:
         flash('an error occured! retry...')
 
-    return redirect(url_for('view_payrolls', id=delete_payroll_id ))
+    return redirect(url_for('view_payrolls', id=id_of_employee_on_payroll ))
 
     
 
