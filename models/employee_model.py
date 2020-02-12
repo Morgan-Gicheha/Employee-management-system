@@ -1,5 +1,5 @@
 # importing the db from the app model
-from app import db
+from main import db
 
 # creating a class
 

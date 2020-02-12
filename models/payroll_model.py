@@ -1,4 +1,4 @@
-from app import db
+from main import db
 # creating tables using orm
 class Payroll(db.Model):
     __tablename__='payrolls_table'
