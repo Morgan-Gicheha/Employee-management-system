@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 # Adding a config
 LOCAL_DB_LINK= 'postgresql://postgres:morgan8514@127.0.0.1:5432/ems'
-HEROKU_BD='postgres://vzegdqokwbwijl:b3c57c279fb1ec7759c831e327b6fa8df15f3156219a158c30b832ee6a3ccf82@ec2-50-17-178-87.compute-1.amazonaws.com:5432/d119j4ufab68n'
+HEROKU_BD='postgres://kbiumvmlmgywyy:ab6cdb841d615b28942dda992221111bba8d679673d6dc74ef941f7ada060875@ec2-18-213-176-229.compute-1.amazonaws.com:5432/dcfgerp8p1hj70'
 app.config['SQLALCHEMY_DATABASE_URI'] = HEROKU_BD
 app.config['SECRET_KEY'] = 'secret key'
 
