@@ -25,7 +25,7 @@ class Payroll(db.Model):
     # fetching payroll with employee id
     @classmethod
     def fetch_payroll_employee_id(cls,employee_id):
-        fetch_payroll_employee_id=cls.query.filter_by(employee_id=employee_id)
+        fetch_payroll_employee_id=cls.query.filter_by(employee_id=employee_id).all()
         return fetch_payroll_employee_id
 
     # deleting a payroll
