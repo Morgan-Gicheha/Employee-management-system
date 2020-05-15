@@ -5,6 +5,7 @@ This a flask application that keeps track of employees, their monthly payrolls(i
 This application entails the basic dababase manipulation (C.R.U.D).
 
 The UI is done with bootstrap, ORM is sqlalchemy
+To view the final product [click here](https://employee-management-systemm.herokuapp.com/)
 
 
 
